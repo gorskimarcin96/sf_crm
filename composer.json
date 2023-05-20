@@ -22,6 +22,7 @@
     "symfony/expression-language": "6.2.*",
     "symfony/flex": "^2",
     "symfony/framework-bundle": "6.2.*",
+    "symfony/monolog-bundle": "^3.8",
     "symfony/property-access": "6.2.*",
     "symfony/property-info": "6.2.*",
     "symfony/runtime": "6.2.*",
@@ -41,6 +42,7 @@
     "symfony/browser-kit": "6.2.*",
     "symfony/css-selector": "6.2.*",
     "symfony/http-client": "6.2.*",
+    "symfony/maker-bundle": "^1.48",
     "symfony/phpunit-bridge": "^6.2"
   },
   "config": {
@@ -83,6 +85,7 @@
     ],
     "tests": [
       "@phpunit",
+      "@rector",
       "@phpstan",
       "@csfix"
     ],
@@ -96,7 +99,7 @@
       "php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon tests"
     ],
     "rector": [
-      "vendor/bin/rector process src --dry-run"
+      "vendor/bin/rector process src"
     ],
     "csfix": [
       "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix"

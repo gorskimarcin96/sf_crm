@@ -55,4 +55,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $this->save($user, true);
     }
+
+    public function isExistsByEmail(string $email): bool
+    {
+        return (bool) $this->count(['email' => $email]);
+    }
 }

@@ -5,3 +5,5 @@ api_platform:
       Bearer:
         name: Authorization
         type: header
+  exception_to_status:
+    App\Controller\Api\Exception\UniqueException: 400

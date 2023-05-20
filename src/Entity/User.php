@@ -4,9 +4,15 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use App\ApiPlatform\DTO\User\Input;
+use App\ApiPlatform\Provider\User\Me;
+use App\Controller\Api\User\RegisterController;
+use App\Entity\Traits\CreatedAtTrait;
+use App\Entity\Traits\UpdatedAtTrait;
 use App\Repository\UserRepository;
-use App\Utils\ApiPlatform\Provider\User\Me;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -14,6 +20,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity('email')]
+#[ORM\HasLifecycleCallbacks()]
 #[ApiResource(
     operations: [
         new Get(
@@ -33,11 +41,33 @@ use Symfony\Component\Serializer\Annotation\Groups;
             ],
             provider: Me::class,
         ),
+        new Post(
+            uriTemplate: '/user/register',
+            controller: RegisterController::class,
+            openapiContext: [
+                'summary' => 'User registration',
+                'description' => 'User registration',
+                'responses' => [
+                    Response::HTTP_CREATED => [
+                        'description' => 'User resource created',
+                        'content' => [
+                            'application/json' => ['schema' => ['$ref' => '#/components/schemas/User-default']],
+                        ],
+                    ],
+                    Response::HTTP_BAD_REQUEST => ['description' => 'Bad request'],
+                    Response::HTTP_UNPROCESSABLE_ENTITY => ['description' => 'Unprocessable entity'],
+                ],
+            ],
+            input: Input::class,
+        ),
     ],
     normalizationContext: ['groups' => ['default']]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use CreatedAtTrait;
+    use UpdatedAtTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
