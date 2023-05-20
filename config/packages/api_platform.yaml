@@ -1,0 +1,7 @@
+api_platform:
+  version: '0.0.1'
+  swagger:
+    api_keys:
+      Bearer:
+        name: Authorization
+        type: header
