@@ -1,4 +1,13 @@
 App\Entity\User:
-  user:
-    email: user@user.test
+  user_1:
+    id: 1
+    email: user_1@user.test
+    password: <hashPassword('password')>
+  user_2:
+    id: 2
+    email: user_2@user.test
+    password: <hashPassword('password')>
+  user_3:
+    id: 3
+    email: user_3@user.test
     password: <hashPassword('password')>

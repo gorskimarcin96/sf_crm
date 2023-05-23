@@ -2,23 +2,28 @@
 
 namespace App\Tests\Api;
 
+use ApiPlatform\Symfony\Bundle\Test\Client;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityNotFoundException;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 
 abstract class ApiTestCase extends \ApiPlatform\Symfony\Bundle\Test\ApiTestCase
 {
     use ReloadDatabaseTrait;
 
-    public function getUserToken(): string
+    public function getClient(): Client
     {
-        $client = self::createClient();
-        $response = $client->request('POST', '/api/authentication', [
-            'headers' => ['Content-Type' => 'application/json'],
-            'json' => [
-                'email' => 'user@user.test',
-                'password' => 'password',
-            ],
-        ]);
+        return self::createClient();
+    }
 
-        return $response->toArray()['token'];
+    public function getUserToken(string $email): string
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->getClient()->getContainer()?->get(UserRepository::class);
+        /** @var JWTManager $JWTManager */
+        $JWTManager = $this->getClient()->getContainer()?->get('lexik_jwt_authentication.jwt_manager');
+
+        return $JWTManager->create($userRepository->findOneByEmail($email) ?? throw new EntityNotFoundException());
     }
 }

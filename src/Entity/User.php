@@ -5,9 +5,9 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
-use App\ApiPlatform\DTO\User\Input;
-use App\ApiPlatform\Provider\User\Me;
-use App\Controller\Api\User\RegisterController;
+use App\ApiPlatform\DTO\User\Model\Input;
+use App\ApiPlatform\DTO\User\Processor;
+use App\ApiPlatform\DTO\User\Provider;
 use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\UpdatedAtTrait;
 use App\Repository\UserRepository;
@@ -25,43 +25,31 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Get(
-            uriTemplate: '/user/me',
+            uriTemplate: '/users/me',
             openapiContext: [
-                'summary' => 'User resource me',
-                'description' => 'User resource me',
-                'responses' => [
-                    Response::HTTP_OK => [
-                        'description' => 'User resource me',
-                        'content' => [
-                            'application/json' => ['schema' => ['$ref' => '#/components/schemas/User-default']],
-                        ],
-                    ],
-                    Response::HTTP_UNAUTHORIZED => ['description' => 'Unauthorized'],
-                ],
-            ],
-            provider: Me::class,
+                'summary' => 'Retrieves the User me resource.',
+                'description' => 'Retrieves the User me resource.',
+            ]
         ),
         new Post(
-            uriTemplate: '/user/register',
-            controller: RegisterController::class,
+            uriTemplate: '/users/register',
             openapiContext: [
                 'summary' => 'User registration',
                 'description' => 'User registration',
                 'responses' => [
                     Response::HTTP_CREATED => [
-                        'description' => 'User resource created',
-                        'content' => [
-                            'application/json' => ['schema' => ['$ref' => '#/components/schemas/User-default']],
-                        ],
+                        'description' => 'User resource created.',
                     ],
-                    Response::HTTP_BAD_REQUEST => ['description' => 'Bad request'],
-                    Response::HTTP_UNPROCESSABLE_ENTITY => ['description' => 'Unprocessable entity'],
+                    Response::HTTP_BAD_REQUEST => ['description' => 'Bad request.'],
+                    Response::HTTP_UNPROCESSABLE_ENTITY => ['description' => 'Unprocessable entity.'],
                 ],
             ],
-            input: Input::class,
         ),
     ],
-    normalizationContext: ['groups' => ['default']]
+    normalizationContext: ['groups' => ['user:read', 'created_at:read', 'updated_at:read']],
+    input: Input::class,
+    provider: Provider::class,
+    processor: Processor::class,
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -71,11 +59,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['default'])]
+    #[Groups(['user:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['default'])]
+    #[Groups(['user:read'])]
     private string $email;
 
     /**
@@ -90,6 +78,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getEmail(): string
@@ -115,9 +110,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
-     *
      * @return string[]
+     *
+     * @see UserInterface
      */
     public function getRoles(): array
     {

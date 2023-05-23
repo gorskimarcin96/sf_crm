@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Api\Exception;
+namespace App\ApiPlatform\Exception;
 
 class UserUniqueException extends UniqueException
 {

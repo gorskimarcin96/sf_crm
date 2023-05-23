@@ -8,7 +8,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 trait CreatedAtTrait
 {
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['default'])]
+    #[Groups(['created_at:read'])]
     private \DateTime $createdAt;
 
     public function getCreatedAt(): \DateTime
@@ -27,7 +27,7 @@ trait CreatedAtTrait
     public function updateCreatedAt(): void
     {
         // @phpstan-ignore-next-line
-        if (null === $this->getId()) {
+        if (null === $this->getId() || null !== $this->getCreatedAt()) {
             $this->setCreatedAt(new \DateTime());
         }
     }

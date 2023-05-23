@@ -1,10 +1,10 @@
 <?php
 
-namespace App\ApiPlatform\DTO\User;
+namespace App\ApiPlatform\DTO\User\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Input
+final class Input
 {
     #[Assert\NotBlank]
     #[Assert\Email]

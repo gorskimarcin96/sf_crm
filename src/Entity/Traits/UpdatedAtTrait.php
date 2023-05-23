@@ -8,7 +8,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 trait UpdatedAtTrait
 {
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['default'])]
+    #[Groups(['updated_at:read'])]
     private \DateTime $updatedAt;
 
     public function getUpdatedAt(): \DateTime

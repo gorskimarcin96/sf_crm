@@ -90,6 +90,7 @@
       "@csfix"
     ],
     "phpunit": [
+      "./bin/console cache:clear --env=test -q",
       "./bin/console doctrine:database:create --env=test --if-not-exists -q",
       "./bin/console doctrine:migration:migrate --env=test -q",
       "./bin/phpunit"

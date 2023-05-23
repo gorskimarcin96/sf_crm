@@ -1,0 +1,9 @@
+App\Entity\Instance:
+  instance_1:
+    id: 1
+    name: instance_name_1
+    createdBy: '@user_1'
+  instance_2:
+    id: 2
+    name: instance_name_2
+    createdBy: '@user_2'

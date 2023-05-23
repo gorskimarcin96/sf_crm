@@ -1,17 +1,6 @@
 services:
   _defaults:
     autowire: true
-    autoconfigure: true
-    public: true
-  App\:
-    resource: '../src/'
-    exclude:
-      - '../src/DependencyInjection/'
-      - '../src/Entity/'
-      - '../src/**/Model'
-      - '../src/**/Exception'
-      - '../src/Utils/Twitter/Client.php'
-      - '../src/Kernel.php'
 
   security.user_password_hasher:
     class: Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher

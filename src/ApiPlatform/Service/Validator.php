@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ApiPlatform;
+namespace App\ApiPlatform\Service;
 
 use ApiPlatform\Symfony\Validator\Exception\ValidationException;
 use Symfony\Component\Validator\Constraint;

@@ -25,5 +25,5 @@ security:
     access_control:
         - { path: ^/api/docs, roles: PUBLIC_ACCESS }
         - { path: ^/api/authentication, roles: PUBLIC_ACCESS }
-        - { path: ^/api/user/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/users/register, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

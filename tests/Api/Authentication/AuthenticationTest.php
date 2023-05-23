@@ -4,6 +4,7 @@ namespace App\Tests\Api\Authentication;
 
 use App\Tests\Api\ApiTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticationTest extends ApiTestCase
 {
@@ -11,36 +12,34 @@ class AuthenticationTest extends ApiTestCase
 
     public function testShouldReturnSuccessfully(): void
     {
-        $client = self::createClient();
-        $response = $client->request('POST', '/api/authentication', [
+        $response = $this->getClient()->request('POST', '/api/authentication', [
             'headers' => ['Content-Type' => 'application/json'],
             'json' => [
-                'email' => 'user@user.test',
+                'email' => 'user_1@user.test',
                 'password' => 'password',
             ],
         ]);
 
         $json = $response->toArray();
-        $this->assertResponseIsSuccessful();
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
         $this->assertArrayHasKey('token', $json);
-        $client->request('GET', '/api/user/me', ['auth_bearer' => $json['token']]);
 
-        $this->assertResponseIsSuccessful();
+        $response = $this->getClient()->request('GET', '/api/users/me', ['auth_bearer' => $json['token']]);
+
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
     }
 
     public function testShouldReturnFailedWhenUseWrongToken(): void
     {
-        $client = self::createClient();
-        $client->request('GET', '/api/user/me', ['auth_bearer' => 'wrong_token']);
+        $response = $this->getClient()->request('GET', '/api/users/me', ['auth_bearer' => 'wrong_token']);
 
-        $this->assertResponseStatusCodeSame(401);
+        $this->assertSame(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
     }
 
     public function testShouldReturnFailedWhenNotUseAuthBearer(): void
     {
-        $client = self::createClient();
-        $client->request('GET', '/api/user/me');
+        $response = $this->getClient()->request('GET', '/api/users/me');
 
-        $this->assertResponseStatusCodeSame(401);
+        $this->assertSame(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
     }
 }

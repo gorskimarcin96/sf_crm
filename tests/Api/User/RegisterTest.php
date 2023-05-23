@@ -3,13 +3,13 @@
 namespace App\Tests\Api\User;
 
 use App\Tests\Api\ApiTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegisterTest extends ApiTestCase
 {
     public function testShouldReturnSuccessfully(): void
     {
-        $client = self::createClient();
-        $response = $client->request('POST', '/api/user/register', [
+        $response = $this->getClient()->request('POST', '/api/users/register', [
             'headers' => ['Content-Type' => 'application/json'],
             'json' => [
                 'email' => 'test@user.test',
@@ -18,26 +18,24 @@ class RegisterTest extends ApiTestCase
         ]);
         $json = $response->toArray();
 
-        $this->assertResponseIsSuccessful();
+        $this->assertSame(Response::HTTP_CREATED, $response->getStatusCode());
         $this->assertArrayHasKey('id', $json);
         $this->assertArrayHasKey('email', $json);
     }
 
     public function testShouldReturnFailedWhenSendEmptyData(): void
     {
-        $client = self::createClient();
-        $client->request('POST', '/api/user/register', [
+        $response = $this->getClient()->request('POST', '/api/users/register', [
             'headers' => ['Content-Type' => 'application/json'],
             'json' => [],
         ]);
 
-        $this->assertResponseStatusCodeSame(422);
+        $this->assertSame(Response::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
     }
 
     public function testShouldReturnFailedWhenEmailIsNotValid(): void
     {
-        $client = self::createClient();
-        $client->request('POST', '/api/user/register', [
+        $response = $this->getClient()->request('POST', '/api/users/register', [
             'headers' => ['Content-Type' => 'application/json'],
             'json' => [
                 'email' => 'user',
@@ -45,20 +43,19 @@ class RegisterTest extends ApiTestCase
             ],
         ]);
 
-        $this->assertResponseStatusCodeSame(422);
+        $this->assertSame(Response::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
     }
 
     public function testShouldReturnFailedWhenEmailIsExists(): void
     {
-        $client = self::createClient();
-        $client->request('POST', '/api/user/register', [
+        $response = $this->getClient()->request('POST', '/api/users/register', [
             'headers' => ['Content-Type' => 'application/json'],
             'json' => [
-                'email' => 'user@user.test',
+                'email' => 'user_1@user.test',
                 'password' => 'password',
             ],
         ]);
 
-        $this->assertResponseStatusCodeSame(400);
+        $this->assertSame(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
 }
