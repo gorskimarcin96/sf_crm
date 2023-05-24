@@ -20,13 +20,19 @@ cd docker && docker-compose up -d
 cd docker && docker-compose exec php ./bin/console lexik:jwt:generate-keypair
 ```
 
+### Generate test data
+
+```sh
+cd docker && docker-compose exec php ./bin/console hautelook:fixtures:load -n
+```
+
 ### Create openapi file
 
 ```sh
 cd docker && docker-compose exec php ./bin/console api:openapi:export >> open_api.json && mv open_api.json ../open_api.json
 ```
 
-### Check documentation
+### Documentation - open_api.json
 
 [Documentation](open_api.json)
 

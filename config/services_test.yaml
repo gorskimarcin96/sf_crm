@@ -7,6 +7,3 @@ services:
     public: true
     arguments:
       [ '@security.password_hasher_factory' ]
-
-  App\DataFixtures\Providers\HashPasswordProvider:
-    tags: [ { name: nelmio_alice.faker.provider } ]

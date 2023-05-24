@@ -1,29 +1,42 @@
 security:
-    password_hashers:
-        App\Entity\User: 'auto'
-    enable_authenticator_manager: true
-    providers:
-        users:
-            entity:
-                class: App\Entity\User
-                property: email
-    firewalls:
-        dev:
-            pattern: ^/_(profiler|wdt)
-            security: false
-        main:
-            stateless: true
-            provider: users
-            json_login:
-                check_path: authentication
-                username_path: email
-                password_path: password
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
-            jwt: ~
+  role_hierarchy:
+    ROLE_USER: [ ROLE_API ]
+    ROLE_ADMIN: [ ROLE_USER ]
+  password_hashers:
+    App\Entity\User: 'auto'
+  enable_authenticator_manager: true
+  providers:
+    users:
+      entity:
+        class: App\Entity\User
+        property: email
+  firewalls:
+    dev:
+      pattern: ^/_(profiler|wdt)
+      security: false
+    api:
+      pattern: ^/api
+      stateless: true
+      provider: users
+      json_login:
+        check_path: authentication
+        username_path: email
+        password_path: password
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
+      jwt: ~
+    admin:
+      pattern: ^/admin
+      custom_authenticator: App\Security\AdminAuthenticator
+      access_denied_handler: App\Security\AccessDeniedHandler
+      logout:
+        path: admin_logout
+        target: 'admin_login'
 
-    access_control:
-        - { path: ^/api/docs, roles: PUBLIC_ACCESS }
-        - { path: ^/api/authentication, roles: PUBLIC_ACCESS }
-        - { path: ^/api/users/register, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+  access_control:
+    - { path: ^/api/docs, roles: PUBLIC_ACCESS }
+    - { path: ^/api/authentication, roles: PUBLIC_ACCESS }
+    - { path: ^/api/users/register, roles: PUBLIC_ACCESS }
+    - { path: ^/api, roles: ROLE_API }
+    - { path: ^/(%app.locales%)/admin/login$, roles: PUBLIC_ACCESS }
+    - { path: ^/(%app.locales%)/admin, roles: ROLE_ADMIN }

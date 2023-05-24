@@ -51,7 +51,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     provider: Provider::class,
     processor: Processor::class,
 )]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
 {
     use CreatedAtTrait;
     use UpdatedAtTrait;
@@ -74,6 +74,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private string $password;
+
+    private ?string $plainPassword = null;
+
+    public function __toString(): string
+    {
+        return $this->email;
+    }
 
     public function getId(): ?int
     {
@@ -147,10 +154,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
     /**
      * @see UserInterface
      */
     public function eraseCredentials(): void
     {
+        $this->plainPassword = null;
     }
 }

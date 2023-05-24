@@ -12,6 +12,7 @@
     "doctrine/doctrine-bundle": "^2.9",
     "doctrine/doctrine-migrations-bundle": "^3.2",
     "doctrine/orm": "^2.15",
+    "easycorp/easyadmin-bundle": "^4.6",
     "lexik/jwt-authentication-bundle": "^2.19",
     "nelmio/cors-bundle": "^2.3",
     "phpdocumentor/reflection-docblock": "^5.3",
@@ -30,6 +31,7 @@
     "symfony/serializer": "6.2.*",
     "symfony/twig-bundle": "6.2.*",
     "symfony/validator": "6.2.*",
+    "symfony/webpack-encore-bundle": "^1.16",
     "symfony/yaml": "6.2.*"
   },
   "require-dev": {
@@ -93,14 +95,14 @@
       "./bin/console cache:clear --env=test -q",
       "./bin/console doctrine:database:create --env=test --if-not-exists -q",
       "./bin/console doctrine:migration:migrate --env=test -q",
-      "./bin/phpunit"
+      "./bin/phpunit --coverage-html public/phpunit"
     ],
     "phpstan": [
       "php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon src",
       "php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon tests"
     ],
     "rector": [
-      "vendor/bin/rector process src"
+      "vendor/bin/rector process src --clear-cache"
     ],
     "csfix": [
       "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix"

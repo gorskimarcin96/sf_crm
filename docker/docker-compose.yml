@@ -30,6 +30,13 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     networks:
       - app-network
+  node:
+    image: node:16.16.0
+    volumes:
+      - ./../:/var/www/html
+    command: sh -c "npm install -g npm && cd /var/www/html && rm -f package-lock.json && npm install && npm audit fix --force && npx encore dev --watch"
+    networks:
+      - app-network
 
 volumes:
   postgres:

@@ -1,3 +1,7 @@
+parameters:
+  locale: 'en'
+  app.locales: pl|en
+
 services:
   _defaults:
     autowire: true
@@ -24,3 +28,7 @@ services:
     class: App\EventListener\EntityListener
     tags:
       - { name: doctrine.event_listener, event: prePersist }
+      - { name: doctrine.event_listener, event: preUpdate }
+
+  App\DataFixtures\Providers\HashPasswordProvider:
+    tags: [ { name: nelmio_alice.faker.provider } ]
