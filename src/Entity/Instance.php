@@ -11,6 +11,7 @@ use App\Entity\Traits\UpdatedAtTrait;
 use App\Repository\InstanceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: InstanceRepository::class)]
 #[ApiResource(
@@ -26,23 +27,27 @@ class Instance implements CreatedByInterface
     use UpdatedAtTrait;
 
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'uuid')]
     #[Groups(['instance:read'])]
-    private ?int $id = null;
+    private Uuid $uuid;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Groups(['instance:read'])]
     private string $name;
 
-    public function getId(): ?int
+    public function __construct()
     {
-        return $this->id;
+        $this->uuid = Uuid::v1();
     }
 
-    public function setId(int $id): self
+    public function getUuid(): Uuid
     {
-        $this->id = $id;
+        return $this->uuid;
+    }
+
+    public function setUuid(string $uuid): self
+    {
+        $this->uuid = Uuid::fromString($uuid);
 
         return $this;
     }

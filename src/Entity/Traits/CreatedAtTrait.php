@@ -27,7 +27,7 @@ trait CreatedAtTrait
     public function updateCreatedAt(): void
     {
         // @phpstan-ignore-next-line
-        if (null === $this->getId() || null !== $this->getCreatedAt()) {
+        if (null === $this->getUuid() || null !== $this->getCreatedAt()) {
             $this->setCreatedAt(new \DateTime());
         }
     }

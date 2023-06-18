@@ -17,7 +17,7 @@ class MeTest extends ApiTestCase
         $json = $response->toArray();
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
-        $this->assertArrayHasKey('id', $json);
+        $this->assertArrayHasKey('uuid', $json);
         $this->assertArrayHasKey('email', $json);
         $this->assertArrayHasKey('createdAt', $json);
         $this->assertArrayHasKey('updatedAt', $json);

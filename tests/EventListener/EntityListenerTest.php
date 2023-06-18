@@ -28,7 +28,7 @@ class EntityListenerTest extends KernelTestCase
 
     public function testSetCreatedBySuccessfullyWhenPrePersist(): void
     {
-        $user = $this->entityManager->getRepository(User::class)->find(3);
+        $user = $this->entityManager->getRepository(User::class)->find('ffc05d8a-0e09-11ee-be56-0242ac120002');
         $this->tokenStorage->setToken(new JWTUserToken([], $user, null, 'api'));
 
         $entity = new Instance();

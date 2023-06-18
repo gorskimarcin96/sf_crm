@@ -19,7 +19,7 @@ class RegisterTest extends ApiTestCase
         $json = $response->toArray();
 
         $this->assertSame(Response::HTTP_CREATED, $response->getStatusCode());
-        $this->assertArrayHasKey('id', $json);
+        $this->assertArrayHasKey('uuid', $json);
         $this->assertArrayHasKey('email', $json);
     }
 

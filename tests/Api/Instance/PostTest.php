@@ -20,9 +20,9 @@ class PostTest extends ApiTestCase
         $json = $response->toArray();
 
         $this->assertSame(Response::HTTP_CREATED, $response->getStatusCode());
-        $this->assertIsInt($json['id']);
+        $this->assertIsString($json['uuid']);
         $this->assertSame('instance name', $json['name']);
-        $this->assertSame(3, $json['createdBy']['id']);
+        $this->assertSame('ffc05d8a-0e09-11ee-be56-0242ac120002', $json['createdBy']['uuid']);
         $this->assertIsString($json['createdAt']);
         $this->assertIsString($json['updatedAt']);
     }

@@ -22,7 +22,7 @@ class InstanceCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->setDefaultSort(['id' => 'desc']);
+        return $crud->setDefaultSort(['createdAt' => 'desc']);
     }
 
     public function configureActions(Actions $actions): Actions

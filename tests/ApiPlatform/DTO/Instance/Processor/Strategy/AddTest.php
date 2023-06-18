@@ -34,7 +34,7 @@ class AddTest extends ApiTestCase
 
     public function testExecuteSuccessfully(): void
     {
-        $user = $this->userRepository->find(3);
+        $user = $this->userRepository->find('ffc05d8a-0e09-11ee-be56-0242ac120002');
         $this->tokenStorage->setToken(new JWTUserToken([], $user, null, 'api'));
 
         $input = new Input();

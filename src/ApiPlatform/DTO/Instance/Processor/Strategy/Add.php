@@ -14,7 +14,7 @@ readonly class Add implements ProcessorStrategyInterface
     {
     }
 
-    public function execute(Input|Instance $input, ?int $id = null): Instance
+    public function execute(Input|Instance $input, ?string $id = null): Instance
     {
         if (!$input instanceof Input) {
             throw new \LogicException();

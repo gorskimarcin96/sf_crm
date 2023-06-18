@@ -50,11 +50,11 @@ final readonly class CreatedByExtension implements QueryCollectionExtensionInter
         $reflectionClass = new \ReflectionClass(new $resourceClass());
         /** @var User $user */
         $user = $this->tokenStorage->getToken()?->getUser();
-        $userId = $user->getId();
+        $userUuid = $user->getUuid();
 
         if ($reflectionClass->implementsInterface(CreatedByInterface::class)) {
             $queryBuilder->andWhere(sprintf('%s.createdBy = :current_user', $queryBuilder->getRootAliases()[0]));
-            $queryBuilder->setParameter('current_user', $userId);
+            $queryBuilder->setParameter('current_user', $userUuid);
         }
     }
 }

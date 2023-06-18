@@ -32,3 +32,7 @@ services:
 
   App\DataFixtures\Providers\HashPasswordProvider:
     tags: [ { name: nelmio_alice.faker.provider } ]
+
+  ApiPlatform\Symfony\UriVariableTransformer\UuidUriVariableTransformer:
+    tags:
+      - { name: api_platform.uri_variables.transformer }

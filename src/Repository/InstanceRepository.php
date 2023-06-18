@@ -43,7 +43,7 @@ class InstanceRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this
             ->createQueryBuilder('i')
-            ->select('count(i.id)')
+            ->select('count(i.uuid)')
             ->andWhere('i.name = :name')
             ->setParameter('name', $name);
 

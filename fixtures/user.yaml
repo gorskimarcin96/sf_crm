@@ -1,13 +1,13 @@
 App\Entity\User:
   user_1:
-    id: 1
+    uuid: ffc0574a-0e09-11ee-be56-0242ac120002
     email: user_1@user.test
     password: <hashPassword('password')>
   user_2:
-    id: 2
+    uuid: ffc059c0-0e09-11ee-be56-0242ac120002
     email: user_2@user.test
     password: <hashPassword('password')>
   user_3:
-    id: 3
+    uuid: ffc05d8a-0e09-11ee-be56-0242ac120002
     email: user_3@user.test
     password: <hashPassword('password')>

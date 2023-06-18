@@ -1,9 +1,9 @@
 App\Entity\Instance:
   instance_1:
-    id: 1
+    uuid: ffc05eac-0e09-11ee-be56-0242ac120002
     name: instance_name_1
     createdBy: '@user_1'
   instance_2:
-    id: 2
+    uuid: ffc05fc4-0e09-11ee-be56-0242ac120002
     name: instance_name_2
     createdBy: '@user_2'

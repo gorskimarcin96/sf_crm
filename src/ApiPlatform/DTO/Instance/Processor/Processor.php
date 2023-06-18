@@ -33,7 +33,7 @@ readonly class Processor implements ProcessorInterface
 
         return match ($operation->getMethod()) {
             'POST' => $this->add->execute($data),
-            'PATCH', 'PUT' => $this->update->execute($data, (int) $uriVariables['id']),
+            'PATCH', 'PUT' => $this->update->execute($data, $uriVariables['uuid']),
             'DELETE' => $this->delete->execute($data),
             default => throw new \LogicException(),
         };

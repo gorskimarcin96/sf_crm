@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -57,10 +58,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     use UpdatedAtTrait;
 
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'uuid')]
     #[Groups(['user:read'])]
-    private ?int $id = null;
+    private Uuid $uuid;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Groups(['user:read'])]
@@ -82,14 +82,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         return $this->email;
     }
 
-    public function getId(): ?int
+    public function __construct()
     {
-        return $this->id;
+        $this->uuid = Uuid::v1();
     }
 
-    public function setId(int $id): self
+    public function getUuid(): Uuid
     {
-        $this->id = $id;
+        return $this->uuid;
+    }
+
+    public function setUuid(string $uuid): self
+    {
+        $this->uuid = Uuid::fromString($uuid);
 
         return $this;
     }

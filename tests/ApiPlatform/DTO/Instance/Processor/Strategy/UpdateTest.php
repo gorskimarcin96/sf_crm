@@ -25,7 +25,7 @@ class UpdateTest extends ApiTestCase
     {
         $input = new Input();
         $input->name = 'name';
-        $result = $this->processorStrategy->execute($input, 1);
+        $result = $this->processorStrategy->execute($input, 'ffc05eac-0e09-11ee-be56-0242ac120002');
 
         $this->assertInstanceOf(Instance::class, $result);
     }

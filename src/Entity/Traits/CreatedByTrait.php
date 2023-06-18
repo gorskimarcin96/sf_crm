@@ -8,8 +8,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 trait CreatedByTrait
 {
-    #[ORM\OneToOne(cascade: ['persist'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(targetEntity: User::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'created_by_uuid', referencedColumnName: 'uuid', nullable: false, )]
     #[Groups(['user:read'])]
     private User $createdBy;
 
