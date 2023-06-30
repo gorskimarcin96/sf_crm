@@ -14,7 +14,7 @@ readonly class Update implements ProcessorStrategyInterface
     {
     }
 
-    public function execute(Input|Instance $input, ?string $uuid = null): Instance
+    public function execute(Input|Instance $input, string $uuid = null): Instance
     {
         if (!$input instanceof Input) {
             throw new \LogicException();

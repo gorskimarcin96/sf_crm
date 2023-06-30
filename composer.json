@@ -45,7 +45,9 @@
     "symfony/css-selector": "6.2.*",
     "symfony/http-client": "6.2.*",
     "symfony/maker-bundle": "^1.48",
-    "symfony/phpunit-bridge": "^6.2"
+    "symfony/phpunit-bridge": "^6.2",
+    "symfony/stopwatch": "6.2.*",
+    "symfony/web-profiler-bundle": "6.2.*"
   },
   "config": {
     "allow-plugins": {
@@ -94,7 +96,7 @@
     "phpunit": [
       "./bin/console cache:clear --env=test -q",
       "./bin/console doctrine:database:create --env=test --if-not-exists -q",
-      "./bin/console doctrine:migration:migrate --env=test -q",
+      "./bin/console doctrine:migration:migrate --env=test -q -n",
       "./bin/phpunit --coverage-html public/phpunit"
     ],
     "phpstan": [

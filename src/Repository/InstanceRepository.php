@@ -39,7 +39,7 @@ class InstanceRepository extends ServiceEntityRepository
         }
     }
 
-    public function isExistsByName(string $name, ?Instance $without = null): bool
+    public function isExistsByName(string $name, Instance $without = null): bool
     {
         $queryBuilder = $this
             ->createQueryBuilder('i')

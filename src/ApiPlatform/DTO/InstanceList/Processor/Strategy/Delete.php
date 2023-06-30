@@ -12,7 +12,7 @@ readonly class Delete implements ProcessorStrategyInterface
     {
     }
 
-    public function execute(Input|InstanceList $input, ?string $uuid = null): null
+    public function execute(Input|InstanceList $input, string $uuid = null): null
     {
         if (!$input instanceof InstanceList) {
             throw new \LogicException();

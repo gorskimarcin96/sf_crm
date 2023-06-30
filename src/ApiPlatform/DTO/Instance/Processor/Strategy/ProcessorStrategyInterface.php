@@ -7,5 +7,5 @@ use App\Entity\Instance;
 
 interface ProcessorStrategyInterface
 {
-    public function execute(Input|Instance $input, ?string $uuid = null): ?Instance;
+    public function execute(Input|Instance $input, string $uuid = null): ?Instance;
 }
