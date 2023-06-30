@@ -8,8 +8,8 @@ use ApiPlatform\Metadata\Post;
 use App\ApiPlatform\DTO\User\Model\Input;
 use App\ApiPlatform\DTO\User\Processor;
 use App\ApiPlatform\DTO\User\Provider;
-use App\Entity\Traits\CreatedAtTrait;
-use App\Entity\Traits\UpdatedAtTrait;
+use App\Entity\Model\CreatedAtInterface;
+use App\Entity\Model\UpdatedAtInterface;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -22,7 +22,6 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity('email')]
-#[ORM\HasLifecycleCallbacks()]
 #[ApiResource(
     operations: [
         new Get(
@@ -47,19 +46,16 @@ use Symfony\Component\Uid\Uuid;
             ],
         ),
     ],
-    normalizationContext: ['groups' => ['user:read', 'created_at:read', 'updated_at:read']],
+    normalizationContext: ['groups' => ['user:read']],
     input: Input::class,
     provider: Provider::class,
     processor: Processor::class,
 )]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable, CreatedAtInterface, UpdatedAtInterface
 {
-    use CreatedAtTrait;
-    use UpdatedAtTrait;
-
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    #[Groups(['user:read'])]
+    #[Groups(['user:read', 'instance:read', 'instance_list:read'])]
     private Uuid $uuid;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -77,6 +73,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     private ?string $plainPassword = null;
 
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['user:read'])]
+    private \DateTimeInterface $createdAt;
+
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['user:read'])]
+    private \DateTimeInterface $updatedAt;
+
     public function __toString(): string
     {
         return $this->email;
@@ -85,6 +89,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     public function __construct()
     {
         $this->uuid = Uuid::v1();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     public function getUuid(): Uuid
@@ -175,5 +181,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     public function eraseCredentials(): void
     {
         $this->plainPassword = null;
+    }
+
+    public function getCreatedAt(): \DateTimeInterface
+    {
+        return $this->createdAt ?? new \DateTime();
+    }
+
+    public function setCreatedAt(\DateTimeInterface $dateTime): self
+    {
+        $this->createdAt = $dateTime;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): \DateTimeInterface
+    {
+        return $this->updatedAt ?? new \DateTime();
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $dateTime): self
+    {
+        $this->updatedAt = $dateTime;
+
+        return $this;
     }
 }

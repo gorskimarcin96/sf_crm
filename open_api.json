@@ -69,15 +69,15 @@
             },
             "parameters": []
         },
-        "/api/instances": {
+        "/api/instance_lists": {
             "get": {
-                "operationId": "api_instances_get_collection",
+                "operationId": "api_instance_lists_get_collection",
                 "tags": [
-                    "Instance"
+                    "InstanceList"
                 ],
                 "responses": {
                     "200": {
-                        "description": "Instance collection",
+                        "description": "InstanceList collection",
                         "content": {
                             "application/ld+json": {
                                 "schema": {
@@ -86,7 +86,7 @@
                                         "hydra:member": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/Instance.jsonld-instance.read_user.read_created_at.read_updated_at.read"
+                                                "$ref": "#/components/schemas/InstanceList.jsonld-instance_list.read"
                                             }
                                         },
                                         "hydra:totalItems": {
@@ -174,7 +174,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Instance-instance.read_user.read_created_at.read_updated_at.read"
+                                        "$ref": "#/components/schemas/InstanceList-instance_list.read"
                                     }
                                 }
                             },
@@ -182,7 +182,442 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Instance-instance.read_user.read_created_at.read_updated_at.read"
+                                        "$ref": "#/components/schemas/InstanceList-instance_list.read"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Retrieves the collection of InstanceList resources.",
+                "description": "Retrieves the collection of InstanceList resources.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "post": {
+                "operationId": "api_instance_lists_post",
+                "tags": [
+                    "InstanceList"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "InstanceList resource created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList.jsonld-instance_list.read"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList-instance_list.read"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList-instance_list.read"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                },
+                "summary": "Creates a InstanceList resource.",
+                "description": "Creates a InstanceList resource.",
+                "parameters": [],
+                "requestBody": {
+                    "description": "The new InstanceList resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InstanceList.Input.jsonld"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InstanceList.Input"
+                            }
+                        },
+                        "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InstanceList.Input"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/api/instance_lists/{uuid}": {
+            "get": {
+                "operationId": "api_instance_lists_uuid_get",
+                "tags": [
+                    "InstanceList"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "InstanceList resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList.jsonld-instance_list.read"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList-instance_list.read"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList-instance_list.read"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieves a InstanceList resource.",
+                "description": "Retrieves a InstanceList resource.",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "InstanceList identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "put": {
+                "operationId": "api_instance_lists_uuid_put",
+                "tags": [
+                    "InstanceList"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "InstanceList resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList.jsonld-instance_list.read"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList-instance_list.read"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList-instance_list.read"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Replaces the InstanceList resource.",
+                "description": "Replaces the InstanceList resource.",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "InstanceList identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "The updated InstanceList resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InstanceList.Input.jsonld"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InstanceList.Input"
+                            }
+                        },
+                        "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InstanceList.Input"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "operationId": "api_instance_lists_uuid_delete",
+                "tags": [
+                    "InstanceList"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "InstanceList resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Removes the InstanceList resource.",
+                "description": "Removes the InstanceList resource.",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "InstanceList identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "patch": {
+                "operationId": "api_instance_lists_uuid_patch",
+                "tags": [
+                    "InstanceList"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "InstanceList resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList.jsonld-instance_list.read"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList-instance_list.read"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstanceList-instance_list.read"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Updates the InstanceList resource.",
+                "description": "Updates the InstanceList resource.",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "InstanceList identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "The updated InstanceList resource",
+                    "content": {
+                        "application/merge-patch+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InstanceList.Input"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/api/instances": {
+            "get": {
+                "operationId": "api_instances_get_collection",
+                "tags": [
+                    "Instance"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Instance collection",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Instance.jsonld-instance.read"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            },
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "hydra:member"
+                                    ]
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Instance-instance.read"
+                                    }
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Instance-instance.read"
                                     }
                                 }
                             }
@@ -221,17 +656,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance.jsonld-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance.jsonld-instance.read"
                                 }
                             },
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance-instance.read"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance-instance.read"
                                 }
                             }
                         },
@@ -272,9 +707,9 @@
             },
             "parameters": []
         },
-        "/api/instances/{id}": {
+        "/api/instances/{uuid}": {
             "get": {
-                "operationId": "api_instances_id_get",
+                "operationId": "api_instances_uuid_get",
                 "tags": [
                     "Instance"
                 ],
@@ -284,17 +719,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance.jsonld-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance.jsonld-instance.read"
                                 }
                             },
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance-instance.read"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance-instance.read"
                                 }
                             }
                         }
@@ -307,7 +742,7 @@
                 "description": "Retrieves a Instance resource.",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "uuid",
                         "in": "path",
                         "description": "Instance identifier",
                         "required": true,
@@ -324,7 +759,7 @@
                 "deprecated": false
             },
             "put": {
-                "operationId": "api_instances_id_put",
+                "operationId": "api_instances_uuid_put",
                 "tags": [
                     "Instance"
                 ],
@@ -334,17 +769,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance.jsonld-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance.jsonld-instance.read"
                                 }
                             },
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance-instance.read"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance-instance.read"
                                 }
                             }
                         },
@@ -364,7 +799,7 @@
                 "description": "Replaces the Instance resource.",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "uuid",
                         "in": "path",
                         "description": "Instance identifier",
                         "required": true,
@@ -402,7 +837,7 @@
                 "deprecated": false
             },
             "delete": {
-                "operationId": "api_instances_id_delete",
+                "operationId": "api_instances_uuid_delete",
                 "tags": [
                     "Instance"
                 ],
@@ -418,7 +853,7 @@
                 "description": "Removes the Instance resource.",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "uuid",
                         "in": "path",
                         "description": "Instance identifier",
                         "required": true,
@@ -435,7 +870,7 @@
                 "deprecated": false
             },
             "patch": {
-                "operationId": "api_instances_id_patch",
+                "operationId": "api_instances_uuid_patch",
                 "tags": [
                     "Instance"
                 ],
@@ -445,17 +880,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance.jsonld-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance.jsonld-instance.read"
                                 }
                             },
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance-instance.read"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Instance-instance.read_user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/Instance-instance.read"
                                 }
                             }
                         },
@@ -475,7 +910,7 @@
                 "description": "Updates the Instance resource.",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "uuid",
                         "in": "path",
                         "description": "Instance identifier",
                         "required": true,
@@ -516,17 +951,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User.jsonld-user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/User.jsonld-user.read"
                                 }
                             },
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User-user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/User-user.read"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User-user.read_created_at.read_updated_at.read"
+                                    "$ref": "#/components/schemas/User-user.read"
                                 }
                             }
                         }
@@ -590,24 +1025,23 @@
     },
     "components": {
         "schemas": {
-            "Instance-instance.read_user.read_created_at.read_updated_at.read": {
+            "Instance-instance.read": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
                 "properties": {
-                    "id": {
-                        "readOnly": true,
-                        "type": "integer"
+                    "uuid": {
+                        "type": "string"
                     },
                     "name": {
                         "type": "string"
                     },
+                    "createdBy": {
+                        "$ref": "#/components/schemas/User-instance.read"
+                    },
                     "createdAt": {
                         "type": "string",
                         "format": "date-time"
-                    },
-                    "createdBy": {
-                        "$ref": "#/components/schemas/User-instance.read_user.read_created_at.read_updated_at.read"
                     },
                     "updatedAt": {
                         "type": "string",
@@ -641,7 +1075,7 @@
                     }
                 }
             },
-            "Instance.jsonld-instance.read_user.read_created_at.read_updated_at.read": {
+            "Instance.jsonld-instance.read": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
@@ -681,19 +1115,18 @@
                         "readOnly": true,
                         "type": "string"
                     },
-                    "id": {
-                        "readOnly": true,
-                        "type": "integer"
+                    "uuid": {
+                        "type": "string"
                     },
                     "name": {
                         "type": "string"
                     },
+                    "createdBy": {
+                        "$ref": "#/components/schemas/User.jsonld-instance.read"
+                    },
                     "createdAt": {
                         "type": "string",
                         "format": "date-time"
-                    },
-                    "createdBy": {
-                        "$ref": "#/components/schemas/User.jsonld-instance.read_user.read_created_at.read_updated_at.read"
                     },
                     "updatedAt": {
                         "type": "string",
@@ -701,18 +1134,24 @@
                     }
                 }
             },
-            "User-instance.read_user.read_created_at.read_updated_at.read": {
+            "InstanceList-instance_list.read": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
                 "properties": {
-                    "id": {
-                        "readOnly": true,
-                        "type": "integer"
-                    },
-                    "email": {
+                    "uuid": {
                         "type": "string"
                     },
+                    "instance": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "$ref": "#/components/schemas/User-instance_list.read"
+                    },
                     "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -723,14 +1162,130 @@
                     }
                 }
             },
-            "User-user.read_created_at.read_updated_at.read": {
+            "InstanceList.Input": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "required": [
+                    "name",
+                    "instanceUuid"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "instanceUuid": {
+                        "type": "string"
+                    }
+                }
+            },
+            "InstanceList.Input.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "required": [
+                    "name",
+                    "instanceUuid"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "instanceUuid": {
+                        "type": "string"
+                    }
+                }
+            },
+            "InstanceList.jsonld-instance_list.read": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
                 "properties": {
-                    "id": {
+                    "@context": {
                         "readOnly": true,
-                        "type": "integer"
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "instance": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "$ref": "#/components/schemas/User.jsonld-instance_list.read"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "User-instance.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "uuid": {
+                        "type": "string"
+                    }
+                }
+            },
+            "User-instance_list.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "uuid": {
+                        "type": "string"
+                    }
+                }
+            },
+            "User-user.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "uuid": {
+                        "type": "string"
                     },
                     "email": {
                         "type": "string"
@@ -787,7 +1342,7 @@
                     }
                 }
             },
-            "User.jsonld-instance.read_user.read_created_at.read_updated_at.read": {
+            "User.jsonld-instance.read": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
@@ -827,24 +1382,12 @@
                         "readOnly": true,
                         "type": "string"
                     },
-                    "id": {
-                        "readOnly": true,
-                        "type": "integer"
-                    },
-                    "email": {
+                    "uuid": {
                         "type": "string"
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "format": "date-time"
                     }
                 }
             },
-            "User.jsonld-user.read_created_at.read_updated_at.read": {
+            "User.jsonld-instance_list.read": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
@@ -884,9 +1427,53 @@
                         "readOnly": true,
                         "type": "string"
                     },
-                    "id": {
+                    "uuid": {
+                        "type": "string"
+                    }
+                }
+            },
+            "User.jsonld-user.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@context": {
                         "readOnly": true,
-                        "type": "integer"
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string"
                     },
                     "email": {
                         "type": "string"

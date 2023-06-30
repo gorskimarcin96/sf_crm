@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Model;
+
+use App\Entity\User;
 
 interface CreatedByInterface
 {

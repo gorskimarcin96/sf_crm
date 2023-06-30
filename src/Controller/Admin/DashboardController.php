@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Instance;
+use App\Entity\InstanceList;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -30,6 +31,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Instance', 'fas fa-industry', Instance::class);
+        yield MenuItem::linkToCrud('Instance list', 'fas fa-list', InstanceList::class);
         yield MenuItem::linkToUrl('API Documentation', 'fas fa-file', $this->urlGenerator->generate('api_doc'));
         yield MenuItem::linkToUrl('Phpunit', 'fa-solid fa-bug', '/phpunit/dashboard.html');
     }

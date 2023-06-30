@@ -37,7 +37,7 @@ class InstanceCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id')->hideOnForm();
+        yield IdField::new('uuid')->hideOnForm();
         yield TextField::new('name');
         yield AssociationField::new('createdBy');
         yield DateTimeField::new('createdAt')->hideOnForm();

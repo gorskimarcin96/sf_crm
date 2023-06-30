@@ -1,0 +1,26 @@
+App\Entity\InstanceList:
+  instance_list_1:
+    uuid: c904a712-1730-11ee-be56-0242ac120002
+    name: list name 1
+    instance: '@instance_1'
+    createdBy: '@user_1'
+  instance_list_2:
+    uuid: c904abc2-1730-11ee-be56-0242ac120002
+    name: list name 2
+    instance: '@instance_1'
+    createdBy: '@user_1'
+  instance_list_3:
+    uuid: c904ad48-1730-11ee-be56-0242ac120002
+    name: list name 3
+    instance: '@instance_1'
+    createdBy: '@user_1'
+  instance_list_4:
+    uuid: c904aec4-1730-11ee-be56-0242ac120002
+    name: list name 4
+    instance: '@instance_1'
+    createdBy: '@user_3'
+  instance_list_5:
+    uuid: c904b02c-1730-11ee-be56-0242ac120002
+    name: list name 5
+    instance: '@instance_2'
+    createdBy: '@user_2'

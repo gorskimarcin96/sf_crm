@@ -14,7 +14,7 @@ readonly class Update implements ProcessorStrategyInterface
     {
     }
 
-    public function execute(Input|Instance $input, ?string $id = null): Instance
+    public function execute(Input|Instance $input, ?string $uuid = null): Instance
     {
         if (!$input instanceof Input) {
             throw new \LogicException();
@@ -23,7 +23,7 @@ readonly class Update implements ProcessorStrategyInterface
         $this->validator->validate($input);
 
         /** @var Instance $entity */
-        $entity = $this->repository->find($id);
+        $entity = $this->repository->find($uuid);
 
         if ($this->repository->isExistsByName($input->name, $entity)) {
             throw new InstanceUniqueException($input->name);

@@ -2,7 +2,9 @@
 
 namespace App\EventListener;
 
-use App\Entity\CreatedByInterface;
+use App\Entity\Model\CreatedAtInterface;
+use App\Entity\Model\CreatedByInterface;
+use App\Entity\Model\UpdatedAtInterface;
 use App\Entity\User;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
@@ -21,6 +23,14 @@ readonly class EntityListener
     {
         $entity = $args->getObject();
 
+        if ($entity instanceof CreatedAtInterface) {
+            $this->setCreatedAt($entity);
+        }
+
+        if ($entity instanceof UpdatedAtInterface) {
+            $this->setUpdatedAt($entity);
+        }
+
         if ($entity instanceof CreatedByInterface) {
             $this->setCreatedBy($entity);
         }
@@ -34,25 +44,39 @@ readonly class EntityListener
     {
         $entity = $args->getObject();
 
+        if ($entity instanceof UpdatedAtInterface) {
+            $this->setUpdatedAt($entity);
+        }
+
         if ($entity instanceof User) {
             $this->setPassword($entity);
         }
     }
 
-    private function setCreatedBy(CreatedByInterface $createdBy): void
+    private function setCreatedAt(CreatedAtInterface $entity): void
+    {
+        $entity->setCreatedAt(new \DateTime());
+    }
+
+    private function setUpdatedAt(UpdatedAtInterface $entity): void
+    {
+        $entity->setUpdatedAt(new \DateTime());
+    }
+
+    private function setCreatedBy(CreatedByInterface $entity): void
     {
         /** @var User|null $user */
         $user = $this->tokenStorage->getToken()?->getUser();
 
         if ($user instanceof User) {
-            $createdBy->setCreatedBy($user);
+            $entity->setCreatedBy($user);
         }
     }
 
-    private function setPassword(User $user): void
+    private function setPassword(User $entity): void
     {
-        if ($user->getPlainPassword()) {
-            $user->setPassword($this->encoder->hashPassword($user, $user->getPlainPassword()));
+        if ($entity->getPlainPassword()) {
+            $entity->setPassword($this->encoder->hashPassword($entity, $entity->getPlainPassword()));
         }
     }
 }

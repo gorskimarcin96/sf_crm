@@ -2,23 +2,22 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\User;
+use App\Entity\InstanceList;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class UserCrudController extends AbstractCrudController
+class InstanceListCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return User::class;
+        return InstanceList::class;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -33,20 +32,15 @@ class UserCrudController extends AbstractCrudController
 
     public function configureFilters(Filters $filters): Filters
     {
-        return $filters
-            ->add('email')
-            ->add('createdAt')
-            ->add('updatedAt');
+        return $filters->add('name');
     }
 
     public function configureFields(string $pageName): iterable
     {
-        $roles = ['User' => 'ROLE_USER', 'Admin' => 'ROLE_ADMIN'];
-
         yield IdField::new('uuid')->hideOnForm();
-        yield EmailField::new('email');
-        yield TextField::new('plainPassword')->onlyOnForms()->setRequired(Action::NEW === $pageName);
-        yield ChoiceField::new('roles')->setChoices($roles)->allowMultipleChoices();
+        yield TextField::new('name');
+        yield AssociationField::new('instance');
+        yield AssociationField::new('createdBy');
         yield DateTimeField::new('createdAt')->hideOnForm();
         yield DateTimeField::new('updatedAt')->hideOnForm();
     }

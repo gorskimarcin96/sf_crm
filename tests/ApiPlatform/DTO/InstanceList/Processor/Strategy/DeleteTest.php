@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Tests\ApiPlatform\DTO\Instance\Processor\Strategy;
+namespace App\Tests\ApiPlatform\DTO\InstanceList\Processor\Strategy;
 
-use App\ApiPlatform\DTO\Instance\Model\Input;
-use App\ApiPlatform\DTO\Instance\Processor\Strategy\Delete;
-use App\ApiPlatform\DTO\Instance\Processor\Strategy\ProcessorStrategyInterface;
-use App\Entity\Instance;
-use App\Repository\InstanceRepository;
+use App\ApiPlatform\DTO\InstanceList\Model\Input;
+use App\ApiPlatform\DTO\InstanceList\Processor\Strategy\Delete;
+use App\ApiPlatform\DTO\InstanceList\Processor\Strategy\ProcessorStrategyInterface;
+use App\Entity\InstanceList;
+use App\Repository\InstanceListRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class DeleteTest extends KernelTestCase
 {
     private ProcessorStrategyInterface $processorStrategy;
-    private InstanceRepository $repository;
+    private InstanceListRepository $repository;
 
     protected function setUp(): void
     {
@@ -21,16 +21,16 @@ class DeleteTest extends KernelTestCase
         /** @var Delete $processorStrategy */
         $processorStrategy = self::getContainer()->get(Delete::class);
         $this->processorStrategy = $processorStrategy;
-        /** @var InstanceRepository $repository */
-        $repository = self::getContainer()->get(InstanceRepository::class);
+        /** @var InstanceListRepository $repository */
+        $repository = self::getContainer()->get(InstanceListRepository::class);
         $this->repository = $repository;
     }
 
     public function testExecuteSuccessfully(): void
     {
-        /** @var Instance $instance */
-        $instance = $this->repository->findOneBy([]);
-        $result = $this->processorStrategy->execute($instance);
+        /** @var InstanceList $instanceList */
+        $instanceList = $this->repository->findOneBy([]);
+        $result = $this->processorStrategy->execute($instanceList);
 
         $this->assertNull($result);
     }
